@@ -14,7 +14,7 @@ export default function SignIn() {
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const redirectTo = searchParams.get('redirectedFrom') || '/dashboard'
+  const redirectTo = searchParams?.get('redirectedFrom') || '/dashboard'
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -57,6 +57,7 @@ export default function SignIn() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={loading}
           />
         </div>
         
@@ -68,6 +69,7 @@ export default function SignIn() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            disabled={loading}
           />
         </div>
 
