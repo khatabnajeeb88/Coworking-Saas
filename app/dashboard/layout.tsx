@@ -3,12 +3,14 @@
 import type React from "react"
 
 import { useState } from "react"
+import { supabase } from '@/lib/supabase'
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { BarChart3, Building2, CreditCard, LayoutDashboard, LogOut, Menu, Settings, Users } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { useRouter } from 'next/navigation'
 
 interface NavItem {
   title: string
@@ -52,6 +54,15 @@ const navItems: NavItem[] = [
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const router = useRouter()
+
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.error('Error signing out:', error)
+    }
+    router.push('/signin')
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -132,7 +143,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           CoworkHub
         </Link>
         <div className="ml-auto flex items-center gap-2">
-          <Button variant="outline" size="sm" className="hidden md:flex">
+          <Button variant="outline" size="sm" className="hidden md:flex" onClick={signOut}>
             <LogOut className="mr-2 h-4 w-4" />
             Logout
           </Button>
