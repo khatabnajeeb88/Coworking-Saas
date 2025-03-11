@@ -103,7 +103,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </Link>
               ))}
               <Link
-                href="/login"
+                href="/signin"
                 className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-muted"
                 onClick={() => setOpen(false)}
               >
